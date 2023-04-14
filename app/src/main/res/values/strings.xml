@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Smart Classroom Monitor</string>
+    <string name="btn_mostrar_raspberryPi">Mostrar</string>
+    <string name="selected_item">Selected item:</string>
+
+    <string-array name="Languages">
+        <item>Java</item>
+        <item>Kotlin</item>
+        <item>Swift</item>
+        <item>Python</item>
+        <item>Scala</item>
+        <item>Perl</item>
+    </string-array>
+</resources>

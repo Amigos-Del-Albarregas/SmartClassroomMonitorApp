@@ -1,0 +1,32 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffd4defeed7, pid=27404, tid=2528
+#
+# JRE version: OpenJDK Runtime Environment (11.0.13) (build 11.0.13+0-b1751.21-8125866)
+# Java VM: OpenJDK 64-Bit Server VM (11.0.13+0-b1751.21-8125866, mixed mode, tiered, compressed oops, g1 gc, windows-amd64)
+# Problematic frame:
+# V  [jvm.dll+0x37eed7]
+#
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   https://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.prefs/java.util.prefs=ALL-UNNAMED --add-opens=java.base/java.nio.charset=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED -Xmx2048m -Dfile.encoding=UTF-8 -Duser.country=GB -Duser.language=en -Duser.variant -javaagent:C:\Users\daria\.gradle\wrapper\dists\gradle-8.1-bin\2eyty4r6kz6fpakefpk52nbbm\gradle-8.1\lib\agents\gradle-instrumentation-agent-8.1.jar org.gradle.launcher.daemon.bootstrap.GradleDaemon 8.1
+
+Host: Intel(R) Core(TM) i7-7500U CPU @ 2.70GHz, 4 cores, 15G,  Windows 11 , 64 bit Build 22621 (10.0.22621.726)
+Time: Thu Apr 13 21:07:51 2023 Romance Summer Time elapsed time: 2806.794538 seconds (0d 0h 46m 46s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00000284c590a800):  JavaThread "Execution worker Thread 2" [_thread_in_vm, id=2528, stack(0x000000fdcb300000,0x000000fdcb400000)]
+
+Stack: [0x000000fdcb300000,0x000000fdcb400000],  sp=0x000000fdcb3f6b30,  free space=986k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x37eed7]
+V  [jvm.dll+0x610022]
+V  [jvm.dll+0x37ed6e]
