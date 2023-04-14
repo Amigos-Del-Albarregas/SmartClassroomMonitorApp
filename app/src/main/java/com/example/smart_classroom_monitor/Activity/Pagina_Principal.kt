@@ -52,7 +52,7 @@ class Pagina_Principal : AppCompatActivity() {
 
     fun cambiarTextos(){
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.137.1:8000")
+            .baseUrl("http://tuIP:8000")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
