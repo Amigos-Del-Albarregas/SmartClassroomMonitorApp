@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import com.example.smart_classroom_monitor.Caller.HeaderBack
 import com.example.smart_classroom_monitor.R
 import com.example.smart_classroom_monitor.Interface.ApiService
 import kotlinx.coroutines.runBlocking
@@ -38,6 +39,7 @@ class Pagina_Principal : AppCompatActivity() {
                                 "" + languages[position], Toast.LENGTH_SHORT).show()
                     val text: TextView = findViewById(R.id.nombreNodo) as TextView
                     text.setText(languages[position])
+                    cambiarTextos()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
@@ -51,14 +53,9 @@ class Pagina_Principal : AppCompatActivity() {
     }
 
     fun cambiarTextos(){
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://192.168.137.1:8000")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val apiService = retrofit.create(ApiService::class.java)
+        val apiService = HeaderBack().conexion()
         val result = runBlocking {
-            apiService.getMierda()
+            apiService.getDatosGenerales()
         }
 
         val textTemperature: TextView = findViewById(R.id.temperature) as TextView
