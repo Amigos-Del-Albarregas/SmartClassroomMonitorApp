@@ -17,17 +17,25 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
 class Pagina_Principal : AppCompatActivity() {
+
+    val apiService = HeaderBack().conexion()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pagina_principal)
         // access the items of the list
-        val languages = resources.getStringArray(R.array.Languages)
+        val listModules = runBlocking {
+            apiService.obtenerModulos()
+        }
 
         // access the spinner
         val spinner = findViewById<Spinner>(R.id.mySpinner)
         if (spinner != null) {
+            var arrayModulos = arrayOf<String>()
+            listModules.forEach { element ->
+                arrayModulos += element.nombre
+            }
             val adapter = ArrayAdapter(this,
-                android.R.layout.simple_spinner_item, languages)
+                android.R.layout.simple_spinner_item, arrayModulos)
             spinner.adapter = adapter
 
             spinner.onItemSelectedListener = object :
@@ -36,9 +44,9 @@ class Pagina_Principal : AppCompatActivity() {
                                             view: View, position: Int, id: Long) {
                     Toast.makeText(this@Pagina_Principal,
                         getString(R.string.selected_item) + " " +
-                                "" + languages[position], Toast.LENGTH_SHORT).show()
+                                "" + listModules[position].nombre, Toast.LENGTH_SHORT).show()
                     val text: TextView = findViewById(R.id.nombreNodo) as TextView
-                    text.setText(languages[position])
+                    text.setText(listModules[position].nombre)
                     cambiarTextos()
                 }
 
@@ -53,7 +61,7 @@ class Pagina_Principal : AppCompatActivity() {
     }
 
     fun cambiarTextos(){
-        val apiService = HeaderBack().conexion()
+
         val result = runBlocking {
             apiService.getDatosGenerales()
         }
@@ -70,6 +78,6 @@ class Pagina_Principal : AppCompatActivity() {
             override fun run() {
                 cambiarTextos()
             }
-        }, 3000)
+        }, 10000)
     }
 }

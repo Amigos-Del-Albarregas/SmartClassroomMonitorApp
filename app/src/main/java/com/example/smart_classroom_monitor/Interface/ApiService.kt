@@ -1,6 +1,7 @@
 package com.example.smart_classroom_monitor.Interface
 
 import com.example.smart_classroom_monitor.Model.Respuesta
+import com.example.smart_classroom_monitor.Model.Modulos
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -11,6 +12,6 @@ interface ApiService {
     @GET("/obtenerDatosModulo/{id}")
     suspend fun getDatosModulo(@Path("id") id: Int): Respuesta
 
-    @GET("/getModulos")
-    suspend fun getModulos(): Respuesta
+    @GET("/obtenerModulos")
+    suspend fun obtenerModulos(): Array<Modulos>
 }
