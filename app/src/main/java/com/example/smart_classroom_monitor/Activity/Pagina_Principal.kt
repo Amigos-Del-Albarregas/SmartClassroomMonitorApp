@@ -1,26 +1,52 @@
 package com.example.smart_classroom_monitor.Activity
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.smart_classroom_monitor.Caller.HeaderBack
+import com.example.smart_classroom_monitor.Firebase.TokenManager
 import com.example.smart_classroom_monitor.R
-import com.example.smart_classroom_monitor.Interface.ApiService
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.runBlocking
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
+import java.io.File
+import java.util.Timer
+import java.util.TimerTask
+
 
 class Pagina_Principal : AppCompatActivity() {
 
     val apiService = HeaderBack().conexion()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+
+            if (!it.isSuccessful){
+                Log.e("TokenDetails","Token Failed to receive!")
+            }
+
+            var tokenFirebase = it.getResult()
+
+            if (tokenFirebase != null) {
+                Log.d("TOKEN",tokenFirebase)
+                val tokenManager = TokenManager(this)
+                val token = tokenManager.getToken()
+                if (token != null && token != tokenFirebase) {
+                    // El token existe, úsalo
+                    tokenManager.saveToken(tokenFirebase)
+                } else {
+                    // El token no existe
+                    tokenManager.saveToken(tokenFirebase)
+                }
+            }
+        }
+
         setContentView(R.layout.activity_pagina_principal)
         // access the items of the list
         val listModules = runBlocking {
@@ -57,7 +83,7 @@ class Pagina_Principal : AppCompatActivity() {
         }
 
         cambiarTextos()
-
+        deleteCache(this)
     }
 
     fun cambiarTextos(){
@@ -79,5 +105,37 @@ class Pagina_Principal : AppCompatActivity() {
                 cambiarTextos()
             }
         }, 10000)
+    }
+
+    fun deleteCache(context: Context) {
+        try {
+            val dir = context.cacheDir
+            deleteDir(dir)
+            val timer = Timer()
+            timer.schedule(object : TimerTask() {
+                override fun run() {
+                    deleteCache(context)
+                }
+            }, 31000)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun deleteDir(dir: File?): Boolean {
+        return if (dir != null && dir.isDirectory) {
+            val children = dir.list()
+            for (i in children.indices) {
+                val success = deleteDir(File(dir, children[i]))
+                if (!success) {
+                    return false
+                }
+            }
+            dir.delete()
+        } else if (dir != null && dir.isFile) {
+            dir.delete()
+        } else {
+            false
+        }
     }
 }
