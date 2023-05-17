@@ -34,15 +34,18 @@ class Pagina_Principal : AppCompatActivity() {
             var tokenFirebase = it.getResult()
 
             if (tokenFirebase != null) {
-                Log.d("TOKEN",tokenFirebase)
                 val tokenManager = TokenManager(this)
                 val token = tokenManager.getToken()
                 if (token != null && token != tokenFirebase) {
                     // El token existe, úsalo
+                    Log.d("TOKEN update",tokenFirebase)
+                    tokenManager.saveToken(tokenFirebase)
+                } else if(token == null){
+                    // El token no existe
+                    Log.d("TOKEN no existe",tokenFirebase)
                     tokenManager.saveToken(tokenFirebase)
                 } else {
-                    // El token no existe
-                    tokenManager.saveToken(tokenFirebase)
+                    Log.d("TOKEN existe",token)
                 }
             }
         }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "402941735252",
+    "project_id": "smart-classroom-monitor-81e68",
+    "storage_bucket": "smart-classroom-monitor-81e68.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:402941735252:android:7d30f52d68160412a098c1",
+        "android_client_info": {
+          "package_name": "com.example.smart_classroom_monitor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "402941735252-o3reaohkfkbiveb6e9l8hbpsfeabjdii.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVqIK9Rb-mRzaIRgAwl47oBE5mIEcURXU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "402941735252-o3reaohkfkbiveb6e9l8hbpsfeabjdii.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
