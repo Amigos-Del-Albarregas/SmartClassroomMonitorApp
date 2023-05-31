@@ -11,13 +11,13 @@ import retrofit2.http.Path
 
 interface ApiService {
     @GET("/obtenerDatosGenerales")
-    suspend fun getDatosGenerales(): Respuesta
+    suspend fun getDatosGenerales(): Respuesta?
 
-    @GET("/obtenerDatosModulo/{id}")
-    suspend fun getDatosModulo(@Path("id") id: Int): Respuesta
+    @GET("/cambiarAula/{aula}")
+    suspend fun getDatosModulo(@Path("aula") aula: String): String?
 
     @GET("/obtenerModulos")
-    suspend fun obtenerModulos(): Array<Modulos>
+    suspend fun obtenerModulos(): Array<Modulos>?
 
     @GET("/obtenerRol")
     suspend fun obtenerRol(): Array<Rol>

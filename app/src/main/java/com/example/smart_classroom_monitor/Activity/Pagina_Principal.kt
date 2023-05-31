@@ -58,7 +58,7 @@ class Pagina_Principal : AppCompatActivity() {
 
         // access the spinner
         val spinner = findViewById<Spinner>(R.id.mySpinner)
-        if (spinner != null) {
+        if (spinner != null && listModules != null) {
             var arrayModulos = arrayOf<String>()
             listModules.forEach { element ->
                 arrayModulos += element.nombre
@@ -66,7 +66,6 @@ class Pagina_Principal : AppCompatActivity() {
             val adapter = ArrayAdapter(this,
                 android.R.layout.simple_spinner_item, arrayModulos)
             spinner.adapter = adapter
-
             spinner.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>,
@@ -76,6 +75,10 @@ class Pagina_Principal : AppCompatActivity() {
                                 "" + listModules[position].nombre, Toast.LENGTH_SHORT).show()
                     val text: TextView = findViewById(R.id.nombreNodo) as TextView
                     text.setText(listModules[position].nombre)
+                    runBlocking {
+                        apiService.getDatosModulo(listModules[position].nombre)
+                    }
+
                     cambiarTextos()
                 }
 
@@ -85,7 +88,6 @@ class Pagina_Principal : AppCompatActivity() {
             }
         }
 
-        cambiarTextos()
         deleteCache(this)
     }
 
@@ -95,19 +97,30 @@ class Pagina_Principal : AppCompatActivity() {
             apiService.getDatosGenerales()
         }
 
-        val textTemperature: TextView = findViewById(R.id.temperature) as TextView
-        val textRuido: TextView = findViewById(R.id.ruido) as TextView
-        val textPresion: TextView = findViewById(R.id.bares) as TextView
+        if (result != null) {
+            val textTemperature: TextView = findViewById(R.id.temperature) as TextView
+            val textRuido: TextView = findViewById(R.id.ruido) as TextView
+            val textPresion: TextView = findViewById(R.id.bares) as TextView
 
-        textTemperature.setText(result.temperatura+"º")
-        textRuido.setText(result.ruido+"dB")
-        textPresion.setText(result.bares+"mb")
-        val timer = Timer()
-        timer.schedule(object : TimerTask() {
-            override fun run() {
-                cambiarTextos()
-            }
-        }, 10000)
+            textTemperature.setText(result?.temperatura+"º")
+            textRuido.setText(result?.ruido+"dB")
+            textPresion.setText(result?.bares+"mb")
+            val timer = Timer()
+            timer.schedule(object : TimerTask() {
+                override fun run() {
+                    cambiarTextos()
+                }
+            }, 10000)
+        } else {
+            val timer = Timer()
+            timer.schedule(object : TimerTask() {
+                override fun run() {
+                    cambiarTextos()
+                }
+            }, 10000)
+        }
+
+
     }
 
     fun deleteCache(context: Context) {
